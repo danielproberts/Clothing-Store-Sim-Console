@@ -10,16 +10,18 @@ namespace Daniel_Roberts_Unit6_IT481
         //Class Parameters
         public int numOfRooms { get; set; }
         public Semaphore availableRooms;
-        public List<Room> roomsList = new List<Room>();
+        public List<Room> roomsList;
         public DressingRooms()
         {
             numOfRooms = 3;
+            roomsList = new List<Room>(numOfRooms);
             availableRooms = new Semaphore(0, numOfRooms);
         }
 
         public DressingRooms(int num)
         {
             numOfRooms = num;
+            roomsList = new List<Room>(numOfRooms);
             availableRooms = new Semaphore(0, numOfRooms);
         }
 

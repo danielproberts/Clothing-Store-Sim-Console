@@ -13,6 +13,7 @@ namespace Daniel_Roberts_Unit6_IT481
         public Room(int num)
         {
             roomNumber = num + 1;
+            roomInUse = 0;
         }
     }
 }

@@ -13,53 +13,47 @@ namespace Daniel_Roberts_Unit6_IT481
         public static DressingRooms dressingRooms;
         public int numOfCustomers;
         public static int totalTime = 0;
-        public static List<Room> roomsList = new List<Room>();
+        public List<Customer> customerList;
+        //public static List<Room> roomsList = new List<Room>();
         //public static int[,] roomsData = new int[,] { };
 
-        public Scenario(int rooms, int customers)
+        public Scenario(int numOfRooms, int customers)
         {
-            dressingRooms = new DressingRooms(rooms);
+            dressingRooms = new DressingRooms(numOfRooms);
             numOfCustomers = customers;
-            dressingRooms.numOfRooms = rooms;
-            //Creates an Array of Rooms. First index shows
-            //status of Room (0 - Empty, 1 - Occupied)
-            //Second index will be an array of the times each 
-            //Customer spent in the Room.
-            dressingRooms.roomsList.Capacity = dressingRooms.numOfRooms;
+            customerList = new List<Customer>();
+            Console.WriteLine(customerList.Count);
+            for (int i = 0; i < numOfCustomers; i++)
+            {
+                Customer c = new Customer();
+                customerList.Add(c);
+                c.customerNumber = i + 1;
+            }
+            Console.WriteLine(customerList.Count);
 
-            //Array.Resize(roomsData[0,0], dressingRooms.numOfRooms);
-            for (int i = 0; i < dressingRooms.numOfRooms; i++)
-            {
-                Room emptyRoom = new Room(i);
-                dressingRooms.roomsList.Add(emptyRoom);
-            }
-            for (int i = 1; i <= numOfCustomers; i++)
-            {
-                Thread t = new Thread(new ParameterizedThreadStart(Customer));
-                t.Start(i);
-                //Console.WriteLine("Customer #" + i + " is waiting for a dressing room.");
-                Thread.Sleep(500);
-            }
+
+            //for (int i = 0; i < customerList.Count; i++)
+            
             //Thread.Sleep(1000);
             dressingRooms.availableRooms.Release(dressingRooms.numOfRooms);
         }
 
-        public static int RequestRoom(DressingRooms rooms)
+        public void Run()
         {
-            rooms.availableRooms.WaitOne();
-            for(int i = 0; i <= rooms.roomsList.Capacity; i++)
+            foreach (Customer c in customerList)
             {
-                if(rooms.roomsList[i].roomInUse == 0)
-                {
-                    Console.WriteLine("Test " + i.ToString());
-                    rooms.roomsList[i].roomNumber = i + 1;
-                    rooms.roomsList[i].roomInUse = 1;
-                    return rooms.roomsList[i].roomNumber;
-                }
+                //int num = customerList[i].numberOfItems;
+                Thread t = new Thread(() => c.TryOnClothes());
+                //Thread t = new Thread(new ParameterizedThreadStart());
+                t.Start();
+                Console.WriteLine("Customer #" + c.customerNumber + " is waiting for a dressing room.");
+                Thread.Sleep(500);
             }
-            return -1;
+            //Console.WriteLine("Scenario " + nameof(this) + " has begun.");
         }
 
+        
+        /*
         public static void Customer(object num)
         {
             //Random randSleep = new Random();
@@ -102,5 +96,6 @@ namespace Daniel_Roberts_Unit6_IT481
             dressingRooms.availableRooms.Release();
             totalTime += timeInDressingRoom;
         }
+        */
     }
 }
