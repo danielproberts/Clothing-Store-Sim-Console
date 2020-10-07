@@ -10,39 +10,40 @@ namespace Daniel_Roberts_Unit6_IT481
         //Class Parameters
         public int numOfRooms { get; set; }
         public Semaphore availableRooms;
-        public List<Room> roomsList;
+        //public List<Room> roomsList;
         public DressingRooms()
         {
             numOfRooms = 3;
-            roomsList = new List<Room>(numOfRooms);
+            //roomsList = new List<Room>(numOfRooms);
             availableRooms = new Semaphore(0, numOfRooms);
+            
         }
 
         public DressingRooms(int num)
         {
             numOfRooms = num;
-            roomsList = new List<Room>(numOfRooms);
+            //roomsList = new List<Room>(numOfRooms);
             availableRooms = new Semaphore(0, numOfRooms);
         }
 
-        public static int RequestRoom(DressingRooms rooms)
+        public void RequestRoom(Customer c, Scenario s)
         {
-            rooms.availableRooms.WaitOne();
-            for (int i = 0; i <= rooms.roomsList.Capacity; i++)
+            availableRooms.WaitOne();
+            for (int i = 0; i < s.roomsList.Count; i++)
             {
-                if (rooms.roomsList[i].roomInUse == 0)
+                if (s.roomsList[i].roomInUse == 0)
                 {
                     Console.WriteLine("Test " + i.ToString());
-                    rooms.roomsList[i].roomNumber = i + 1;
-                    rooms.roomsList[i].roomInUse = 1;
-                    return rooms.roomsList[i].roomNumber;
+                    s.roomsList[i].roomNumber = (i + 1);
+                    c.roomNumber = s.roomsList[i].roomNumber;
+                    s.roomsList[i].roomInUse = 1;
+                    //return c.roomNumber;
+                    c.TryOnClothes();
                 }
             }
-            return -1;
+            availableRooms.Release(1);
         }
-
     }
-
 }
 
 /*DressingRooms will be a class, and there will only be one instance of DressingRooms.

@@ -7,8 +7,9 @@ namespace Daniel_Roberts_Unit6_IT481
     class Customer
     {
         public int numberOfItems;
-        public static int timeInDressingRoom;
+        public int timeInDressingRoom;
         public int customerNumber;
+        public int roomNumber;
         public Customer()
         {
             Random rand = new Random();
@@ -23,15 +24,17 @@ namespace Daniel_Roberts_Unit6_IT481
 
         public void TryOnClothes()
         {
+            //DressingRooms.RequestRoom(this);
             int clothingItems = this.numberOfItems;
-
+            Console.WriteLine("Customer #" + this.customerNumber + " has entered Dressing Room# " + this.roomNumber);
+            Console.WriteLine("Customer #" + this.customerNumber + " is trying on " + this.numberOfItems + " items.");
             for (int i = 0; i < clothingItems; i++)
             {
                 Random randTryOn = new Random();
                 int tryOnClothes = randTryOn.Next(1, 4);
                 timeInDressingRoom += tryOnClothes;
             }
-            Console.WriteLine(timeInDressingRoom.ToString());
+            Console.WriteLine(timeInDressingRoom.ToString());            
         }
     }
 }

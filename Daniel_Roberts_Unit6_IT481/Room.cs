@@ -10,6 +10,10 @@ namespace Daniel_Roberts_Unit6_IT481
         public int roomInUse;
         public List<int> timeRoomInUse = new List<int>();
 
+        public Room()
+        {
+            roomInUse = 0;
+        }
         public Room(int num)
         {
             roomNumber = num + 1;

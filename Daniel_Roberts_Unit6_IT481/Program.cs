@@ -7,18 +7,35 @@ namespace Daniel_Roberts_Unit6_IT481
     {
         static void Main(string[] args)
         {
-            Scenario01();
+            Scenario00();
             Console.ReadKey();
+        }
+
+        public static void Scenario00()
+        {
+            Scenario scenario00 = new Scenario(5, 10);
+            Thread.Sleep(1000);
+            Console.WriteLine("Scenario " + nameof(scenario00) + " has begun.");
+            scenario00.Run();
+            Console.WriteLine(Scenario.totalTime.ToString());
         }
 
         public static void Scenario01()
         {
-            Scenario test = new Scenario(5, 10);
+            Scenario scenario01 = new Scenario(5, 20);
             Thread.Sleep(1000);
-            test.Run();
-            Console.WriteLine("Scenario " + nameof(test) + " has begun.");
+            Console.WriteLine("Scenario " + nameof(scenario01) + " has begun.");
+            scenario01.Run();
             Console.WriteLine(Scenario.totalTime.ToString());
         }
 
+        public static void Scenario02()
+        {
+            Scenario scenario02 = new Scenario(10, 20);
+            Thread.Sleep(1000);
+            Console.WriteLine("Scenario " + nameof(scenario02) + " has begun.");
+            scenario02.Run();
+            Console.WriteLine(Scenario.totalTime.ToString());
+        }
     }
 }
